@@ -23,5 +23,27 @@ namespace Business.Concrete
             _customerDal.Add(customer);
             return new SuccessResult();
         }
+
+        public IResult Delete(Customer customer)
+        {
+            _customerDal.Delete(customer);
+            return new SuccessResult(Messages.CarListed);
+        }
+
+        public IDataResult<List<Customer>> GetAll()
+        {
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
+        }
+
+        public IDataResult<Customer> GetById(int id)
+        {
+            return new SuccessDataResult<Customer>(_customerDal.Get(b => b.Id == id), Messages.CarAdded);
+        }
+
+        public IResult Update(Customer customer)
+        {
+            _customerDal.Update(customer);
+            return new SuccessResult(Messages.CarAdded);
+        }
     }
 }

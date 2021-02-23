@@ -16,6 +16,8 @@ namespace ConsoleUI
 
             //Ödev10Test();
 
+            
+
         }
 
         private static void Ödev10Test()

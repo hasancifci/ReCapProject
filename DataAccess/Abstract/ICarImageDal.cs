@@ -3,12 +3,10 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Core.Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface IUserDal:IEntityRepository<User>
+    public interface ICarImageDal:IEntityRepository<CarImage>
     {
-        List<OperationClaim> GetClaims(User user);
     }
 }

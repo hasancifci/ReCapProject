@@ -3,6 +3,7 @@ using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using System;
+using Core.Entities.Concrete;
 
 namespace ConsoleUI
 {
@@ -30,7 +31,7 @@ namespace ConsoleUI
                 FirstName = "Hasan",
                 LastName = "Çifçi",
                 Email = "hhasancifci@gmail.com",
-                Password = "1234"
+                //Password = "1234"
             });
 
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
@@ -66,16 +67,16 @@ namespace ConsoleUI
 
         private static void Test1()
         {
-            //CarManager carManager = new CarManager(new EfCarDal());
-            //ColorManager colorManager = new ColorManager(new EfColorDal());
-            //BrandManager brandManager = new BrandManager(new EfBrandDal());
+            CarManager carManager = new CarManager(new EfCarDal());
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
 
 
-            //colorManager.Add(new Color { Id = 4, ColorName = "Yeşil" });
+            colorManager.Add(new Color { Id = 1, ColorName = "Yeşil" });
 
-            //brandManager.Add(new Brand { Id = 5, BrandName = "Opel" });
+            brandManager.Add(new Brand { Id = 1, BrandName = "Opel" });
 
-            //carManager.Add(new Car { Id = 7, ColorId = 4, BrandId = 5, ModelYear = 2015, DailyPrice = 350, Description = "Opel Kiralama Bedeli" });
+            carManager.Add(new Car { Id = 1, ColorId = 1, BrandId = 1, ModelYear = 2015, DailyPrice = 350, Description = "Opel Kiralama Bedeli" });
 
 
             //foreach (var car in carManager.GetAll())

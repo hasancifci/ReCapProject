@@ -17,44 +17,26 @@ namespace WebAPI.Controllers
     public class CarImageController : ControllerBase
     {
         ICarImageService _carImageService;
-        IWebHostEnvironment _webHostEnviroment;
-        
 
-        public CarImageController(ICarImageService carImageService, IWebHostEnvironment webHostEnviroment)
+        public CarImageController(ICarImageService carImageService)
         {
             _carImageService = carImageService;
-            _webHostEnviroment = webHostEnviroment;
         }
 
-        [HttpPost("imageAdd")]
-        public string Post([FromForm]FileUpload objectFile)
+        [HttpPost("add")]
+        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImage)
         {
-            try
+            var result = _carImageService.Add(file, carImage);
+            if (result.Succes)
             {
-                if (objectFile.files.Length>0)
-                {
-                    string path = _webHostEnviroment.WebRootPath + "\\uploads\\";
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    using (FileStream fileStream = System.IO.File.Create(path + objectFile.files.FileName))
-                    {
-                        objectFile.files.CopyTo(fileStream);
-                        fileStream.Flush();
-                        return "Uploaded.";
-                    }
-                }
-                else
-                {
-                    return "Not uploaded.";
-                }
+                return Ok(result);
             }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
+            return BadRequest(result);
+        }//sorun buraya yaz 
+        //Arablara resim ekliyorum path i kendim veriyorum , postmande listelediğimiz zaman doğru olup olmadığını anlayabilmem için o resimin gittiğini nasıl anlarım
+        //potmanda fotoğrafı görebilme imkanım varmı
+        //bu arada veritabanında tüm yolu tutmuşşun çalısmaz bu onu düzeltelim evet bende pathle alakalı kısmı anlayamadım tmm ben birazdan anlatırım düzelteyimtmm
+        //
 
         [HttpGet("getall")]
         public IActionResult GetAll()
@@ -67,10 +49,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbyid")]
-        public IActionResult GetById(int id)
+        [HttpGet("getimagesbycarid")]
+        public IActionResult GetImagesByCarId(int carId)
         {
-            var result = _carImageService.GetById(id);
+            var result = _carImageService.GetImagesByCarId(carId);
             if (result.Succes)
             {
                 return Ok(result);
@@ -78,37 +60,5 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("add")]
-        public IActionResult Add(CarImage carImage)
-        {
-            var result = _carImageService.Add(carImage);
-            if (result.Succes)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-        [HttpPost("update")]
-        public IActionResult Update(CarImage carImage)
-        {
-            var result = _carImageService.Update(carImage);
-            if (result.Succes)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-        [HttpPost("delete")]
-        public IActionResult Delete(CarImage carImage)
-        {
-            var result = _carImageService.Delete(carImage);
-            if (result.Succes)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }        
     }
 }

@@ -10,8 +10,9 @@ namespace Business.Abstract
     public interface ICarService
     {
         IDataResult<List<Car>> GetAll();
-        IDataResult<List<Car>> GetCarsByBrandId(int id);
-        IDataResult<List<Car>> GetCarsByColorId(int id);
+        IDataResult<List<CarDetailDto>> GetCarsByBrandId(int id);
+        IDataResult<List<CarDetailDto>> GetCarsByColorId(int id);
+        IDataResult<List<CarDetailDto>> GetCarDetailsByCarId(int id);
         IDataResult<Car> GetById(int id);
         IResult Add(Car car);
         IResult Update(Car car);

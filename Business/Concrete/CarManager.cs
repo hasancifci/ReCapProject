@@ -55,11 +55,15 @@ namespace Business.Concrete
 
         //[CacheAspect]
         //[PerformanceAspect(5)]
-        [SecuredOperation("car.list,admin")]
+        //[SecuredOperation("car.list,admin")]
         public IDataResult<List<Car>> GetAll()
         {
-            Thread.Sleep(5000);
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarListed);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByCarId(int id)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.Id == id));
         }
 
         public IDataResult<Car> GetById(int id)
@@ -72,14 +76,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-        public IDataResult<List<Car>> GetCarsByBrandId(int id)
+        public IDataResult<List<CarDetailDto>> GetCarsByBrandId(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id));
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.BrandId == id));
         }
 
-        public IDataResult<List<Car>> GetCarsByColorId(int id)
+        public IDataResult<List<CarDetailDto>> GetCarsByColorId(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.ColorId == id));
         }
 
         [ValidationAspect(typeof(CarValidator))]
